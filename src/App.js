@@ -19,7 +19,7 @@ class App extends Component {
     return (
       <div className="App">
         <Diary diary={this.state.diary} putToDB={this.putToDB} deleteItem={this.deleteItem} />
-        <ListOfFoods listOfFoods={this.state.listOfFoods} postToDB={this.postToDB} putToDB={this.putToDB} deleteItem={this.deleteItem} />
+        <ListOfFoods listOfFoods={this.state.listOfFoods} postToDB={this.postToDB} putToDB={this.putToDB} deleteItem={this.deleteItem} />   
       </div>
     );
   }

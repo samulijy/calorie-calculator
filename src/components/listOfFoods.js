@@ -4,13 +4,11 @@ import { Button } from 'reactstrap';
 import FoodToListModal from './foodToListModal'
 import FoodToDiaryModal from './foodToDiaryModal'
 import FoodListRow from './foodListRow'
-import EditFoodModal from './editFoodModal'
 
 class ListOfFoods extends React.Component {
     state = {
         foodToListModal: false,
         foodToDiaryModal: false,
-        editFoodModal: false,
         food: {},
         grams: 0,
         newFood: {
@@ -21,6 +19,7 @@ class ListOfFoods extends React.Component {
             fat: 0
         },
         filterValue: "",
+        editing: false
     }
 
     render(){    
@@ -30,14 +29,15 @@ class ListOfFoods extends React.Component {
             })
             .map(food => {
                 return(
-                    <FoodListRow key={food.id}
-                    food={food}
-                    openFoodToDiaryModal={this.openFoodToDiaryModal}
-                    deleteItem={this.props.deleteItem}
-                    openEditFoodModal={this.openEditFoodModal}
+                    <FoodListRow
+                        key={food.id}
+                        food={food}
+                        openFoodToDiaryModal={this.openFoodToDiaryModal}
+                        deleteItem={this.props.deleteItem}
+                        openEditFoodModal={this.openEditFoodModal}
                     />
                 ) 
-            })
+            });
             
         return (
             <div className="listOfFoods">
@@ -63,12 +63,8 @@ class ListOfFoods extends React.Component {
                     toggle={this.newFoodToggle}
                     handleInputChange={this.handleInputChange}
                     addFoodToList={this.addFoodToList}
-                />
-                <EditFoodModal 
-                    modal={this.state.editFoodModal}
-                    toggle={this.editFoodToggle}
-                    handleInputChange={this.handleInputChange}
                     editFood={this.editFood}
+                    editing={this.state.editing}
                     food={this.state.newFood}
                 />
             </div>
@@ -84,10 +80,6 @@ class ListOfFoods extends React.Component {
         this.setState({ foodToDiaryModal: !this.state.foodToDiaryModal });
     }
 
-    editFoodToggle = () => {
-        this.setState({ editFoodModal: !this.state.editFoodModal });
-    }
-
     //Functions that open modals.
     openFoodToListModal = () => {
         const newFood = {
@@ -97,7 +89,19 @@ class ListOfFoods extends React.Component {
             carb: 0,
             fat: 0
         }
-        this.setState({ newFood });
+        this.setState({
+            newFood,
+            editing: false
+        });
+        this.newFoodToggle();
+    }
+
+    openEditFoodModal = (food, event) => {
+        event.stopPropagation();
+        this.setState({
+            newFood: food,
+            editing: true
+        });
         this.newFoodToggle();
     }
 
@@ -118,12 +122,7 @@ class ListOfFoods extends React.Component {
         this.useFoodToggle();
     }
 
-    openEditFoodModal = (food, event) => {
-        event.stopPropagation();
-        this.setState({ newFood: food });
-        this.editFoodToggle();
-    }
-
+    //HTTP requests. Adding and editing foods
     addFoodToDiary = () => {
         const foodName = this.state.newFood.foodName + ' ' + this.state.grams + ' g'
         const newFood = {
@@ -136,7 +135,6 @@ class ListOfFoods extends React.Component {
     addFoodToList = () => {
         this.props.postToDB(this.state.newFood, "listOfFoods")
     }
-
 
     editFood = () => {
         this.props.putToDB(this.state.newFood)
