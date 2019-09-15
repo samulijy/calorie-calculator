@@ -7,16 +7,16 @@ class FoodListRow extends React.Component {
     }
 
     render() {
-        const { food, openFoodToDiaryModal, deleteItem, openEditFoodModal } = this.props;
+        const { food, openFoodToDiaryModal, deleteFood, openEditFoodModal } = this.props;
         return (
             <tr>
                 <td onClick={this.toggle}>
-                    {food.foodName}
+                    {food.name}
                     <Button color="success" size="sm" onClick={(event) => openFoodToDiaryModal(food, event)}>+</Button>
                     <Collapse isOpen={this.state.collapse}>
                         <div className="collapseTexts">
-                            <p>Energy: {food.kcal} kcal / 100 g</p>
-                            <p>Proteins: {food.prot} g / 100 g</p>
+                            <p>Energy: {food.energy} kcal / 100 g</p>
+                            <p>Proteins: {food.protein} g / 100 g</p>
                             <p>Carbohydrates: {food.carb} g / 100 g</p>
                             <p>Fats: {food.fat} g / 100 g</p>
                         </div>
@@ -32,7 +32,7 @@ class FoodListRow extends React.Component {
                             className="collapseButton"
                             outline color="danger"
                             size="sm"
-                            onClick={() => deleteItem(food.id, "listOfFoods")} 
+                            onClick={() => deleteFood(food.id)} 
                         >
                             Delete
                         </Button>

@@ -3,15 +3,16 @@ import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'react
 
 const FoodToListModal = (props) => {
 
-    //Values to show in input fields, if editing. If adding a new food, input fields are empty. Amd values for title and button
-    let foodName, kcal, prot, carb, fat, buttonContent, title, buttonFunc;
+    //Values to show in input fields, if editing. If adding a new food, input fields are empty.
+    let name, energy, protein, carb, fat, buttonContent, title, buttonFunc;
     if(props.editing){
-        foodName = {'value' : props.food.foodName};
-        kcal = {'value' : props.food.kcal};
-        prot = {'value' : props.food.prot};
+        name = {'value' : props.food.name};
+        energy = {'value' : props.food.energy};
+        protein = {'value' : props.food.protein};
         carb = {'value' : props.food.carb};
         fat = {'value' : props.food.fat};
 
+        // Values for title and button
         title = "Edit Food";
         buttonContent = "Edit";
         buttonFunc = props.editFood;
@@ -30,17 +31,17 @@ const FoodToListModal = (props) => {
                     <tbody>
                         <tr>
                             <td>Name:</td>
-                            <td><input type="text" name="foodName" onChange={props.handleInputChange} {...foodName}/></td>
+                            <td><input type="text" name="name" onChange={props.handleInputChange} {...name}/></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Energy:</td>
-                            <td><input type="text" name="kcal" onChange={props.handleInputChange} {...kcal}/></td>
+                            <td><input type="text" name="energy" onChange={props.handleInputChange} {...energy}/></td>
                             <td>kcal / 100 g</td>
                         </tr>
                         <tr>
                             <td>Proteins:</td>
-                            <td><input type="text" name="prot" onChange={props.handleInputChange} {...prot}/></td>
+                            <td><input type="text" name="protein" onChange={props.handleInputChange} {...protein}/></td>
                             <td>g / 100 g</td>
                         </tr>
                         <tr>

@@ -5,19 +5,19 @@ const FoodToDiaryModal = (props) => {
     return (    
         <Modal isOpen={props.modal} toggle={props.toggle}>
             <ModalHeader toggle={props.toggle}>
-                {props.food.foodName}{' '}
-                <input type="text" name="grams" onChange={props.handleInputChange} />{' '} g
+                {props.food.name}{' '}
+                <input type="text" name="weight" onChange={props.handleInputChange} />{' '} g
             </ModalHeader>
             <ModalBody>
                 <Table striped>
                     <tbody>
                         <tr>
                             <td>Energy:</td>
-                            <td><input disabled value={parseInt(props.food.kcal).toFixed()}/> kcal</td>
+                            <td><input disabled value={parseInt(props.food.energy).toFixed()}/> energy</td>
                         </tr>
                         <tr>
                             <td>Proteins:</td>
-                            <td><input disabled value={parseInt(props.food.prot).toFixed()}/> g</td>
+                            <td><input disabled value={parseInt(props.food.protein).toFixed()}/> g</td>
                         </tr>
                         <tr>
                             <td>Carbohydrates:</td>

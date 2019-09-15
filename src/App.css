@@ -1,28 +1,17 @@
-
-.diary{
-    width: 40%;
-    float: left;
-    margin: 1%;
+.mainContainer{
+    width: 100%;
+    margin: 20px;
     border: 2px solid;
     padding: 5px;
     box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
 }
 
-.listOfFoods{
-    width: 25%;
-    float: left;
-    margin: 1%;
-    border: 2px solid;
-    padding: 5px;
-    box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
-}
-
-.listOfFoods input {
+.mainContainer input {
     width: 100%;
     margin: 5px 0px;
 }
 
-.listOfFoods Button{
+.mainContainer Button{
     float: right;
     margin: 3px;
 }

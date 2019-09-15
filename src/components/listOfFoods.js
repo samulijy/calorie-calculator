@@ -9,23 +9,23 @@ class ListOfFoods extends React.Component {
     state = {
         foodToListModal: false,
         foodToDiaryModal: false,
-        food: {},
-        grams: 0,
+        selectedFood: {},
+        weight: 0,
         newFood: {
-            foodName: "",
-            kcal: 0,
-            prot: 0,
+            name: '',
+            energy: 0,
+            protein: 0,
             carb: 0,
             fat: 0
         },
-        filterValue: "",
+        filterValue: '',
         editing: false
     }
 
     render(){    
-        const foodList = this.props.listOfFoods
+        const foodList = this.props.data
             .filter(food => {
-                return food.foodName.toLowerCase().indexOf(this.state.filterValue.toLowerCase()) >= 0
+                return food.name.toLowerCase().indexOf(this.state.filterValue.toLowerCase()) >= 0
             })
             .map(food => {
                 return(
@@ -33,14 +33,13 @@ class ListOfFoods extends React.Component {
                         key={food.id}
                         food={food}
                         openFoodToDiaryModal={this.openFoodToDiaryModal}
-                        deleteItem={this.props.deleteItem}
+                        deleteFood={this.props.deleteFood}
                         openEditFoodModal={this.openEditFoodModal}
                     />
                 ) 
             });
-            
         return (
-            <div className="listOfFoods">
+            <div className="mainContainer">
                 <h3>List of Foods</h3>
                 <Button color="primary" onClick={this.openFoodToListModal}>Add New Food</Button>
                 <input name="searchBar" type="text" placeholder="Search" value={this.state.filterValue} onChange={this.handleInputChange}/>
@@ -55,7 +54,7 @@ class ListOfFoods extends React.Component {
                     toggle={this.useFoodToggle}
                     food={this.state.newFood}
                     handleInputChange={this.handleInputChange}
-                    grams={this.state.grams}
+                    weight={this.state.weight}
                     addFoodToDiary={this.addFoodToDiary}
                 />
                 <FoodToListModal
@@ -83,9 +82,9 @@ class ListOfFoods extends React.Component {
     //Functions that open modals.
     openFoodToListModal = () => {
         const newFood = {
-            foodName: "",
-            kcal: 0,
-            prot: 0,
+            name: '',
+            energy: 0,
+            protein: 0,
             carb: 0,
             fat: 0
         }
@@ -108,57 +107,62 @@ class ListOfFoods extends React.Component {
     openFoodToDiaryModal = (food, event) => {  
         event.stopPropagation();
         const newFood = {
-            foodName: food.foodName,
-            kcal: 0,
-            prot: 0,
+            name: food.name,
+            energy: 0,
+            protein: 0,
             carb: 0,
             fat: 0
         }
         this.setState({ 
-            food,
+            selectedFood: food,
             newFood,
-            grams: 0 
+            weight: 0 
         });
         this.useFoodToggle();
     }
 
     //HTTP requests. Adding and editing foods
     addFoodToDiary = () => {
-        const foodName = this.state.newFood.foodName + ' ' + this.state.grams + ' g'
-        const newFood = {
-            ...this.state.newFood,
-            foodName
+        const body = {
+            id: this.state.selectedFood.id,
+            weight: this.state.weight,
+            date: '2019-09-08' // TODO
         }
-        this.props.postToDB(newFood, "diary");
+        this.props.addFoodToDiary(body);
     }
 
     addFoodToList = () => {
-        this.props.postToDB(this.state.newFood, "listOfFoods")
+        this.props.createNewFood(this.state.newFood);
     }
 
-    editFood = () => {
-        this.props.putToDB(this.state.newFood)
+    editFood = () => { 
+        const food = {
+            id: this.state.selectedFood.id,
+            ...this.state.newFood
+        };
+        this.props.editFood(food)
     }
 
+    //Input onChanges
     handleInputChange = (event) => {
         let newFood = {};
         switch(event.target.name){
-            case "grams":
-                const food = this.state.food;
-                const grams = event.target.value;
+            case 'weight':
+                const food = this.state.selectedFood;
+                const weight = event.target.value;
                 newFood = {
                     ...this.state.newFood,
-                    kcal: food.kcal / 100 * grams,
-                    prot: food.prot / 100 * grams,
-                    carb: food.carb / 100 * grams,
-                    fat: food.fat / 100 * grams
+                    energy: food.energy / 100 * weight,
+                    protein: food.protein / 100 * weight,
+                    carb: food.carb / 100 * weight,
+                    fat: food.fat / 100 * weight
                 }
                 this.setState({
-                    grams,
+                    weight,
                     newFood
                 });
                 break;
-            case "searchBar":
+            case 'searchBar':
                 this.setState({ filterValue: event.target.value });
                 break;
             default:

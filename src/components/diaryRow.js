@@ -2,16 +2,16 @@ import React from 'react';
 import {Button} from 'reactstrap'
 
 const DiaryRow = (props) => {
-    const {food, deleteItem} = props;
+    const {food, deleteFood} = props;
     return (
         <tr>
-            <td>{food.foodName}</td>
-            <td>{food.kcal.toFixed()}</td>
-            <td>{food.prot.toFixed()}</td>
+            <td>{food.name + ' ' + food.weight}</td>
+            <td>{food.energy.toFixed()}</td>
+            <td>{food.protein.toFixed()}</td>
             <td>{food.carb.toFixed()}</td>
             <td>{food.fat.toFixed()}</td>
             <td style={{width:"90px"}}>
-                <Button outline color="danger" size="sm" onClick={() => deleteItem(food.id, "diary")}>Delete</Button>
+                <Button outline color="danger" size="sm" onClick={() => deleteFood(food.id)}>Delete</Button>
             </td>
         </tr>
     );

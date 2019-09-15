@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+import { Row, Col } from 'reactstrap';
 import './App.css';
 import Diary from './components/diary'
 import ListOfFoods from './components/listOfFoods'
 import axios from 'axios';
+import { isArray } from 'util';
 
 class App extends Component {
 
   state = {
-    listOfFoods: [],
-    diary: [],
+    listOfFoodsData: [],
+    diaryData: [],
   }
 
   componentDidMount() {
@@ -18,39 +20,74 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Diary diary={this.state.diary} putToDB={this.putToDB} deleteItem={this.deleteItem} />
-        <ListOfFoods listOfFoods={this.state.listOfFoods} postToDB={this.postToDB} putToDB={this.putToDB} deleteItem={this.deleteItem} />   
+        <Row>
+          <Col lg="5">
+            <Diary
+              data={this.state.diaryData}
+              deleteFood={this.deleteDiaryFood}
+              // todo edit?
+            />
+          </Col>
+          <Col lg="3">
+            <ListOfFoods
+              data={this.state.listOfFoodsData}
+              addFoodToDiary={this.addFoodToDiary}
+              createNewFood={this.createNewFood}
+              editFood={this.editFood}
+              deleteFood={this.deleteFood}
+            /> 
+          </Col>
+        </Row>  
       </div>
     );
   }
 
   getData = () => {
-    axios.get('http://localhost:3000/listOfFoods')
+    axios.get('http://localhost:3000/foodlist')
+    .then(response => {
+      if (isArray(response.data)) {
+        this.setState({ listOfFoodsData: response.data });
+      }
+    })
+    .then(axios.get('http://localhost:3000/diary/2019-09-08') // TODO hardkoodattu päivä pois
       .then(response => {
-        this.setState({ listOfFoods: response.data });
+        if (isArray(response.data)) {
+          this.setState({ diaryData: response.data });
+        }
       })
-      .then(axios.get('http://localhost:3000/diary')
-        .then(response => {
-          this.setState({ diary: response.data });
-        })
-      )
-      .catch(err => console.log(err));
+    )
+    .catch(err => console.log(err));
   }
 
-  postToDB = (food, path) => {
-    axios.post(`http://localhost:3000/${path}`, food)
-      .then(() => this.getData())
+  createNewFood = (food) => {
+    const body = {
+      food
+    };
+    axios.post(`http://localhost:3000/food`, body)
+      .then(() => this.getData());
   }
 
-  putToDB = (food) => {
-    const path = food.id;
-    axios.put(`http://localhost:3000/listOfFoods/${path}`, food)
-      .then(() => this.getData())
+  editFood = (food) => {
+    const body = {
+      food
+    };
+    axios.put(`http://localhost:3000/food`, body)
+      .then(() => this.getData());
   }
 
-  deleteItem = (id, path) => {
-    axios.delete(`http://localhost:3000/${path}/${id}`)
-      .then(() => this.getData())
+  deleteFood = (id) => {
+    axios.delete(`http://localhost:3000/food/${id}`)
+      .then(() => this.getData());
+  }
+
+  addFoodToDiary = (data) => {
+    axios.post(`http://localhost:3000/diaryfood`, data)
+      .then(() => this.getData());
+  }
+
+  deleteDiaryFood = (id) => {
+    axios.delete(`http://localhost:3000/diaryfood/${id}`)
+      .then(() => this.getData());
   }
 
 }
