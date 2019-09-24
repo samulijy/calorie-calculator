@@ -1,17 +1,19 @@
-import React from 'react';
-import { Table } from 'reactstrap';
-import { Button } from 'reactstrap';
+import React from 'react'
+import { Table } from 'reactstrap'
+import { Button } from 'reactstrap'
 import FoodToListModal from './foodToListModal'
 import FoodToDiaryModal from './foodToDiaryModal'
 import FoodListRow from './foodListRow'
+import { round } from '../utils'
 
 class ListOfFoods extends React.Component {
     state = {
         foodToListModal: false,
         foodToDiaryModal: false,
-        selectedFood: {},
+        selectedFood: {}, // We need this to do calculations in handleInputChange
         weight: 0,
         newFood: {
+            id: -1,
             name: '',
             energy: 0,
             protein: 0,
@@ -42,7 +44,7 @@ class ListOfFoods extends React.Component {
             <div className="mainContainer">
                 <h3>List of Foods</h3>
                 <Button color="primary" onClick={this.openFoodToListModal}>Add New Food</Button>
-                <input name="searchBar" type="text" placeholder="Search" value={this.state.filterValue} onChange={this.handleInputChange}/>
+                <input name="searchBar" type="text" placeholder="Search" autoComplete="off" value={this.state.filterValue} onChange={this.handleInputChange}/>
                 <Table hover striped bordered size="sm">
                     <tbody className="listOfFoodsTable">                      
                         {foodList}
@@ -83,10 +85,10 @@ class ListOfFoods extends React.Component {
     openFoodToListModal = () => {
         const newFood = {
             name: '',
-            energy: 0,
-            protein: 0,
-            carb: 0,
-            fat: 0
+            energy: '',
+            protein: '',
+            carb: '',
+            fat: ''
         }
         this.setState({
             newFood,
@@ -116,7 +118,7 @@ class ListOfFoods extends React.Component {
         this.setState({ 
             selectedFood: food,
             newFood,
-            weight: 0 
+            weight: ''
         });
         this.useFoodToggle();
     }
@@ -125,20 +127,31 @@ class ListOfFoods extends React.Component {
     addFoodToDiary = () => {
         const body = {
             id: this.state.selectedFood.id,
-            weight: this.state.weight,
+            weight: round(this.state.weight, 0),
             date: '2019-09-08' // TODO
         }
         this.props.addFoodToDiary(body);
     }
 
     addFoodToList = () => {
-        this.props.createNewFood(this.state.newFood);
+        const food = {
+            name: this.state.newFood.name,
+            energy: round(this.state.newFood.energy, 0),
+            fat: round(this.state.newFood.fat, 1),
+            carb: round(this.state.newFood.carb, 1),
+            protein: round(this.state.newFood.protein, 1)
+        }
+        this.props.createNewFood(food);
     }
 
     editFood = () => { 
         const food = {
-            id: this.state.selectedFood.id,
-            ...this.state.newFood
+            id: this.state.newFood.id,
+            name: this.state.newFood.name,
+            energy: round(this.state.newFood.energy, 0),
+            fat: round(this.state.newFood.fat, 1),
+            carb: round(this.state.newFood.carb, 1),
+            protein: round(this.state.newFood.protein, 1)
         };
         this.props.editFood(food)
     }

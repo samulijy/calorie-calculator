@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import DiaryRow from './diaryRow';
+import { round } from '../utils'
 
 const Diary = (props) => {
 
@@ -10,12 +11,21 @@ const Diary = (props) => {
         carb: 358,
         fat: 95
     }
+    const calculated = props.data.map(food => {
+        return {
+            ...food,
+            energy: food.energy / 100 * food.weight,
+            fat: food.fat / 100 * food.weight,
+            carb: food.carb / 100 * food.weight,
+            protein: food.protein / 100 * food.weight
+        }
+    })
 
     const totals = {
-        energy: props.data.reduce((acc, cur) => (acc + cur.energy), 0),
-        protein: props.data.reduce((acc, cur) => (acc + cur.protein), 0),
-        carb: props.data.reduce((acc, cur) => (acc + cur.carb), 0),
-        fat: props.data.reduce((acc, cur) => (acc + cur.fat), 0)
+        energy: calculated.reduce((acc, cur) => (acc + cur.energy), 0),
+        protein: calculated.reduce((acc, cur) => (acc + cur.protein), 0),
+        carb: calculated.reduce((acc, cur) => (acc + cur.carb), 0),
+        fat: calculated.reduce((acc, cur) => (acc + cur.fat), 0)
     }
 
     return (
@@ -34,32 +44,32 @@ const Diary = (props) => {
                 </thead>
 
                 <tbody>
-                    {props.data.map(food => (
+                    {calculated.map(food => (
                         <DiaryRow key={food.id} food={food} deleteFood={props.deleteFood}/>
                     ))}
                     
                     <tr className="bolded">
                         <td>Total</td>
-                        <td>{totals.energy.toFixed()}</td>
-                        <td>{totals.protein.toFixed()}</td>
-                        <td>{totals.carb.toFixed()}</td>
-                        <td>{totals.fat.toFixed()}</td>
+                        <td>{round(totals.energy, 0)}</td>
+                        <td>{round(totals.protein, 1)}</td>
+                        <td>{round(totals.carb, 1)}</td>
+                        <td>{round(totals.fat, 1)}</td>
                         <td></td>
                     </tr>
                     <tr className="bolded">
                         <td>Daily goal</td>
-                        <td>{dailyGoal.energy.toFixed()}</td>
-                        <td>{dailyGoal.protein.toFixed()}</td>
-                        <td>{dailyGoal.carb.toFixed()}</td>
-                        <td>{dailyGoal.fat.toFixed()}</td>
+                        <td>{round(dailyGoal.energy, 0)}</td>
+                        <td>{round(dailyGoal.protein, 1)}</td>
+                        <td>{round(dailyGoal.carb, 1)}</td>
+                        <td>{round(dailyGoal.fat, 1)}</td>
                         <td ></td>
                     </tr>
                     <tr className="bolded" style={{"color": "red"}}>
                         <td>Remaining</td>
-                        <td>{(dailyGoal.energy - totals.energy).toFixed()}</td>
-                        <td>{(dailyGoal.protein - totals.protein).toFixed()}</td>
-                        <td>{(dailyGoal.carb - totals.carb).toFixed()}</td>
-                        <td>{(dailyGoal.fat - totals.fat).toFixed()}</td>
+                        <td>{round(dailyGoal.energy - totals.energy, 0)}</td>
+                        <td>{round(dailyGoal.protein - totals.protein, 1)}</td>
+                        <td>{round(dailyGoal.carb - totals.carb, 1)}</td>
+                        <td>{round(dailyGoal.fat - totals.fat, 1)}</td>
                         <td></td>
                     </tr>
                 </tbody>

@@ -1,17 +1,11 @@
 import React from 'react';
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import NumOnlyInput from './numOnlyInput'
 
 const FoodToListModal = (props) => {
 
-    //Values to show in input fields, if editing. If adding a new food, input fields are empty.
-    let name, energy, protein, carb, fat, buttonContent, title, buttonFunc;
+    let buttonContent, title, buttonFunc;
     if(props.editing){
-        name = {'value' : props.food.name};
-        energy = {'value' : props.food.energy};
-        protein = {'value' : props.food.protein};
-        carb = {'value' : props.food.carb};
-        fat = {'value' : props.food.fat};
-
         // Values for title and button
         title = "Edit Food";
         buttonContent = "Edit";
@@ -31,35 +25,35 @@ const FoodToListModal = (props) => {
                     <tbody>
                         <tr>
                             <td>Name:</td>
-                            <td><input type="text" name="name" onChange={props.handleInputChange} {...name}/></td>
+                            <td><input type="text" name="name" autoComplete="off" onChange={props.handleInputChange} value={props.food.name}/></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td>Energy:</td>
-                            <td><input type="text" name="energy" onChange={props.handleInputChange} {...energy}/></td>
+                            <td><NumOnlyInput inputValue={props.food.energy} name="energy" handleInputChange={props.handleInputChange}/></td>
                             <td>kcal / 100 g</td>
                         </tr>
                         <tr>
                             <td>Proteins:</td>
-                            <td><input type="text" name="protein" onChange={props.handleInputChange} {...protein}/></td>
+                            <td><NumOnlyInput inputValue={props.food.protein} name="protein" handleInputChange={props.handleInputChange}/></td>
                             <td>g / 100 g</td>
                         </tr>
                         <tr>
                             <td>Carbohydrates:</td>
-                            <td><input type="text" name="carb" onChange={props.handleInputChange} {...carb}/></td>
+                            <td><NumOnlyInput inputValue={props.food.carb} name="carb" handleInputChange={props.handleInputChange}/></td>
                             <td>g / 100 g</td>
                         </tr>
                         <tr>
                             <td>Fats:</td>
-                            <td><input type="text" name="fat" onChange={props.handleInputChange} {...fat}/></td>
+                            <td><NumOnlyInput inputValue={props.food.fat} name="fat" handleInputChange={props.handleInputChange}/></td>
                             <td>g / 100 g</td>
                         </tr>
                     </tbody>
                 </Table>
             </ModalBody>
             <ModalFooter>
-                <Button color="primary" onClick={() => {buttonFunc(); props.toggle()}}>{buttonContent}</Button>{' '}
-                <Button color="secondary" onClick={props.toggle}>Cancel</Button>
+                <Button color="secondary" onClick={props.toggle}>Cancel</Button>{' '}
+                <Button color="primary" onClick={() => {buttonFunc(); props.toggle()}}>{buttonContent}</Button>
             </ModalFooter>
         </Modal>
     );
