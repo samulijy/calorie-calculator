@@ -34,8 +34,8 @@ const FoodToListModal = (props) => {
                             <td>kcal / 100 g</td>
                         </tr>
                         <tr>
-                            <td>Proteins:</td>
-                            <td><NumOnlyInput inputValue={props.food.protein} name="protein" handleInputChange={props.handleInputChange}/></td>
+                            <td>Fats:</td>
+                            <td><NumOnlyInput inputValue={props.food.fat} name="fat" handleInputChange={props.handleInputChange}/></td>
                             <td>g / 100 g</td>
                         </tr>
                         <tr>
@@ -44,8 +44,8 @@ const FoodToListModal = (props) => {
                             <td>g / 100 g</td>
                         </tr>
                         <tr>
-                            <td>Fats:</td>
-                            <td><NumOnlyInput inputValue={props.food.fat} name="fat" handleInputChange={props.handleInputChange}/></td>
+                            <td>Proteins:</td>
+                            <td><NumOnlyInput inputValue={props.food.protein} name="protein" handleInputChange={props.handleInputChange}/></td>
                             <td>g / 100 g</td>
                         </tr>
                     </tbody>

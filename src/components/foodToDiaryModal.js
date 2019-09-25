@@ -18,16 +18,16 @@ const FoodToDiaryModal = (props) => {
                             <td><NumOnlyInput disabled inputValue={round(props.food.energy, 0)} name="energy"/> kcal</td>
                         </tr>
                         <tr>
-                            <td>Proteins:</td>
-                            <td><NumOnlyInput disabled inputValue={round(props.food.protein, 1)} name="protein"/> g</td>
+                            <td>Fats:</td>
+                            <td><NumOnlyInput disabled inputValue={round(props.food.fat, 1)} name="fat"/> g</td>
                         </tr>
                         <tr>
                             <td>Carbohydrates:</td>
                             <td><NumOnlyInput disabled inputValue={round(props.food.carb, 1)} name="carb"/> g</td>
                         </tr>
                         <tr>
-                            <td>Fats:</td>
-                            <td><NumOnlyInput disabled inputValue={round(props.food.fat, 1)} name="fat"/> g</td>
+                            <td>Proteins:</td>
+                            <td><NumOnlyInput disabled inputValue={round(props.food.protein, 1)} name="protein"/> g</td>
                         </tr>
                     </tbody>
                 </Table>

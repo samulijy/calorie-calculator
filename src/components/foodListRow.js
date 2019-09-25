@@ -16,9 +16,9 @@ class FoodListRow extends React.Component {
                     <Collapse isOpen={this.state.collapse}>
                         <div className="collapseTexts">
                             <p>Energy: {food.energy} kcal / 100 g</p>
-                            <p>Proteins: {food.protein} g / 100 g</p>
-                            <p>Carbohydrates: {food.carb} g / 100 g</p>
                             <p>Fats: {food.fat} g / 100 g</p>
+                            <p>Carbohydrates: {food.carb} g / 100 g</p>
+                            <p>Proteins: {food.protein} g / 100 g</p>
                         </div>
                         <Button
                             className="collapseButton"

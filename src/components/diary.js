@@ -36,9 +36,9 @@ const Diary = (props) => {
                     <tr>
                         <th>Food name</th>
                         <th>Energy (kcal)</th>
-                        <th>Prots (g)</th>
-                        <th>Carbs (g)</th>
                         <th>Fats (g)</th>
+                        <th>Carbs (g)</th>
+                        <th>Prots (g)</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -51,25 +51,25 @@ const Diary = (props) => {
                     <tr className="bolded">
                         <td>Total</td>
                         <td>{round(totals.energy, 0)}</td>
-                        <td>{round(totals.protein, 1)}</td>
-                        <td>{round(totals.carb, 1)}</td>
                         <td>{round(totals.fat, 1)}</td>
+                        <td>{round(totals.carb, 1)}</td>
+                        <td>{round(totals.protein, 1)}</td>
                         <td></td>
                     </tr>
                     <tr className="bolded">
                         <td>Daily goal</td>
                         <td>{round(dailyGoal.energy, 0)}</td>
-                        <td>{round(dailyGoal.protein, 1)}</td>
-                        <td>{round(dailyGoal.carb, 1)}</td>
                         <td>{round(dailyGoal.fat, 1)}</td>
+                        <td>{round(dailyGoal.carb, 1)}</td>
+                        <td>{round(dailyGoal.protein, 1)}</td>
                         <td ></td>
                     </tr>
                     <tr className="bolded" style={{"color": "red"}}>
                         <td>Remaining</td>
                         <td>{round(dailyGoal.energy - totals.energy, 0)}</td>
-                        <td>{round(dailyGoal.protein - totals.protein, 1)}</td>
-                        <td>{round(dailyGoal.carb - totals.carb, 1)}</td>
                         <td>{round(dailyGoal.fat - totals.fat, 1)}</td>
+                        <td>{round(dailyGoal.carb - totals.carb, 1)}</td>
+                        <td>{round(dailyGoal.protein - totals.protein, 1)}</td>
                         <td></td>
                     </tr>
                 </tbody>
