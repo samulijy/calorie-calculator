@@ -24,13 +24,13 @@ class ListOfFoods extends React.Component {
         editing: false
     }
 
-    render(){    
+    render() {
         const foodList = this.props.data
             .filter(food => {
                 return food.name.toLowerCase().indexOf(this.state.filterValue.toLowerCase()) >= 0
             })
             .map(food => {
-                return(
+                return (
                     <FoodListRow
                         key={food.id}
                         food={food}
@@ -38,19 +38,19 @@ class ListOfFoods extends React.Component {
                         deleteFood={this.props.deleteFood}
                         openEditFoodModal={this.openEditFoodModal}
                     />
-                ) 
+                )
             });
         return (
             <div className="mainContainer">
                 <h3>List of Foods</h3>
                 <Button color="primary" onClick={this.openFoodToListModal}>Add New Food</Button>
-                <input name="searchBar" type="text" placeholder="Search" autoComplete="off" value={this.state.filterValue} onChange={this.handleInputChange}/>
+                <input name="searchBar" type="text" placeholder="Search" autoComplete="off" value={this.state.filterValue} onChange={this.handleInputChange} />
                 <Table hover striped bordered size="sm">
-                    <tbody className="listOfFoodsTable">                      
+                    <tbody className="listOfFoodsTable">
                         {foodList}
                     </tbody>
                 </Table>
-                
+
                 <FoodToDiaryModal
                     modal={this.state.foodToDiaryModal}
                     toggle={this.useFoodToggle}
@@ -106,7 +106,7 @@ class ListOfFoods extends React.Component {
         this.newFoodToggle();
     }
 
-    openFoodToDiaryModal = (food, event) => {  
+    openFoodToDiaryModal = (food, event) => {
         event.stopPropagation();
         const newFood = {
             name: food.name,
@@ -115,7 +115,7 @@ class ListOfFoods extends React.Component {
             carb: 0,
             fat: 0
         }
-        this.setState({ 
+        this.setState({
             selectedFood: food,
             newFood,
             weight: ''
@@ -127,8 +127,7 @@ class ListOfFoods extends React.Component {
     addFoodToDiary = () => {
         const body = {
             id: this.state.selectedFood.id,
-            weight: round(this.state.weight, 0),
-            date: '2019-09-08' // TODO
+            weight: round(this.state.weight, 0)
         }
         this.props.addFoodToDiary(body);
     }
@@ -144,7 +143,7 @@ class ListOfFoods extends React.Component {
         this.props.createNewFood(food);
     }
 
-    editFood = () => { 
+    editFood = () => {
         const food = {
             id: this.state.newFood.id,
             name: this.state.newFood.name,
@@ -159,7 +158,7 @@ class ListOfFoods extends React.Component {
     //Input onChanges
     handleInputChange = (event) => {
         let newFood = {};
-        switch(event.target.name){
+        switch (event.target.name) {
             case 'weight':
                 const food = this.state.selectedFood;
                 const weight = event.target.value;
@@ -189,5 +188,5 @@ class ListOfFoods extends React.Component {
         }
     }
 }
- 
+
 export default ListOfFoods;

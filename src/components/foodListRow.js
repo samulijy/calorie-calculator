@@ -1,5 +1,7 @@
 import React from 'react';
 import { Button, Collapse } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrashAlt, faPen } from '@fortawesome/free-solid-svg-icons'
 
 class FoodListRow extends React.Component {
     state = {
@@ -26,7 +28,7 @@ class FoodListRow extends React.Component {
                             size="sm"
                             onClick={(event) => openEditFoodModal(food, event)}
                         >
-                            Edit
+                            <FontAwesomeIcon icon={faPen}/>
                         </Button>
                         <Button
                             className="collapseButton"
@@ -34,7 +36,7 @@ class FoodListRow extends React.Component {
                             size="sm"
                             onClick={() => deleteFood(food.id)} 
                         >
-                            Delete
+                            <FontAwesomeIcon icon={faTrashAlt}/>
                         </Button>
                     </Collapse>
                 </td>

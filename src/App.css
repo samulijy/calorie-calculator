@@ -37,3 +37,6 @@
     font-weight: bold;
 }
 
+.datepicker Button {
+    float: none;
+}
