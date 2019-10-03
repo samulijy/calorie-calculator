@@ -24,7 +24,7 @@ class FoodListRow extends React.Component {
                         </div>
                         <Button
                             className="collapseButton"
-                            outline color="primary"
+                            outline color="secondary"
                             size="sm"
                             onClick={(event) => openEditFoodModal(food, event)}
                         >

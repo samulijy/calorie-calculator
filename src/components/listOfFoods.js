@@ -1,10 +1,10 @@
 import React from 'react'
-import { Table } from 'reactstrap'
-import { Button } from 'reactstrap'
+import { Table, Button } from 'reactstrap'
 import FoodToListModal from './foodToListModal'
 import FoodToDiaryModal from './foodToDiaryModal'
 import FoodListRow from './foodListRow'
 import { round } from '../utils'
+import PageNumbers from './pageNumbers'
 
 class ListOfFoods extends React.Component {
     state = {
@@ -21,25 +21,30 @@ class ListOfFoods extends React.Component {
             fat: 0
         },
         filterValue: '',
-        editing: false
+        editing: false,
+        pageIndex: 1
     }
 
     render() {
-        const foodList = this.props.data
-            .filter(food => {
-                return food.name.toLowerCase().indexOf(this.state.filterValue.toLowerCase()) >= 0
-            })
-            .map(food => {
-                return (
-                    <FoodListRow
-                        key={food.id}
-                        food={food}
-                        openFoodToDiaryModal={this.openFoodToDiaryModal}
-                        deleteFood={this.props.deleteFood}
-                        openEditFoodModal={this.openEditFoodModal}
-                    />
-                )
-            });
+        const itemLimit = this.props.diaryLength > 13 ? this.props.diaryLength + 1: 14;
+        const filteredFoods = this.props.data.filter(food => {
+            return food.name.toLowerCase().indexOf(this.state.filterValue.toLowerCase()) >= 0
+        });
+        const numberOfPages = Math.floor(filteredFoods.length / itemLimit) + 1;
+        const startIndex = (this.state.pageIndex - 1) * itemLimit;
+        const foodsInPage = filteredFoods.splice(startIndex, itemLimit);
+        const foodList = foodsInPage.map(food => {
+            return (
+                <FoodListRow
+                    key={food.id}
+                    food={food}
+                    openFoodToDiaryModal={this.openFoodToDiaryModal}
+                    deleteFood={this.props.deleteFood}
+                    openEditFoodModal={this.openEditFoodModal}
+                />
+            )
+        });
+
         return (
             <div className="mainContainer">
                 <h3>List of Foods</h3>
@@ -50,6 +55,8 @@ class ListOfFoods extends React.Component {
                         {foodList}
                     </tbody>
                 </Table>
+
+                <PageNumbers pageNumberOnClick={this.pageNumberOnClick} numberOfPages={numberOfPages} selectedPage={this.state.pageIndex}/>
 
                 <FoodToDiaryModal
                     modal={this.state.foodToDiaryModal}
@@ -70,6 +77,10 @@ class ListOfFoods extends React.Component {
                 />
             </div>
         );
+    }
+
+    pageNumberOnClick = (pageIndex) => {
+        this.setState({ pageIndex });
     }
 
     //Modal toggles

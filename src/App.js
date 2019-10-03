@@ -38,6 +38,7 @@ class App extends Component {
               createNewFood={this.createNewFood}
               editFood={this.editFood}
               deleteFood={this.deleteFood}
+              diaryLength={this.state.diaryData.length}
             />
           </Col>
         </Row>

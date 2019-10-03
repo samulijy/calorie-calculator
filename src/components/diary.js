@@ -25,10 +25,10 @@ class Diary extends React.Component {
 
     render() {
         const dailyGoal = {
-            energy: 2860,
-            protein: 143,
-            carb: 358,
-            fat: 95
+            energy: 2660,
+            protein: 133,
+            carb: 333,
+            fat: 89
         }
         const calculated = this.props.data.map(food => {
             return {

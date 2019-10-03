@@ -10,12 +10,12 @@ const DiaryRow = (props) => {
         <tr>
             <td>{food.name + ' - ' + food.weight + ' g'}</td>
             <td>{round(food.energy, 0)}</td>
-            <td>{round(food.protein, 1)}</td>
-            <td>{round(food.carb, 1)}</td>
             <td>{round(food.fat, 1)}</td>
+            <td>{round(food.carb, 1)}</td>
+            <td>{round(food.protein, 1)}</td>
             <td style={{ width: "90px" }}>
                 <Button outline color="danger" size="sm" onClick={() => deleteFood(food.id)}><FontAwesomeIcon icon={faTrashAlt} /></Button>
-                <Button outline color="primary" size="sm" ><FontAwesomeIcon icon={faPen} /></Button>
+                <Button outline color="secondary" size="sm" ><FontAwesomeIcon icon={faPen} /></Button>
             </td>
         </tr>
     );
