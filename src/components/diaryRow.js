@@ -6,9 +6,10 @@ import { faTrashAlt, faPen } from '@fortawesome/free-solid-svg-icons'
 
 const DiaryRow = (props) => {
     const { food, deleteFood } = props;
+    const name = food.weight != null ? food.name + ' - ' + food.weight + ' g' : food.name;
     return (
         <tr>
-            <td>{food.name + ' - ' + food.weight + ' g'}</td>
+            <td>{name}</td>
             <td>{round(food.energy, 0)}</td>
             <td>{round(food.fat, 1)}</td>
             <td>{round(food.carb, 1)}</td>

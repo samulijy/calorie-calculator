@@ -32,6 +32,7 @@ class DatePickerComponent extends React.Component {
                         selected={this.state.date}
                         onChange={date => this.selectDate(date)}
                         dateFormat="dd/MM/yyyy"
+                        todayButton="Today"
                     />
                     <Button onClick={this.nextDate} color="primary"><FontAwesomeIcon icon={faChevronRight}/></Button>
                 </ButtonGroup>

@@ -29,6 +29,7 @@ class App extends Component {
               data={this.state.diaryData}
               deleteFood={this.deleteDiaryFood}
               diaryDateChanged={this.diaryDateChanged}
+              quickAddFood={this.quickAddFood}
             />
           </Col>
           <Col lg="3">
@@ -101,6 +102,15 @@ class App extends Component {
 
   deleteDiaryFood = (id) => {
     axios.delete(`http://localhost:3000/diaryfood/${id}`)
+      .then(() => this.getDiary());
+  }
+
+  quickAddFood = (food) => {
+    const body = {
+      food,
+      date: this.state.diaryDate
+    };
+    axios.post(`http://localhost:3000/quickaddfood`, body)
       .then(() => this.getDiary());
   }
 
