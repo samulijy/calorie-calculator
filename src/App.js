@@ -21,8 +21,15 @@ class App extends Component {
   }
 
   render() {
+    // If selected date is not current date, show red background
+    const today = new Date().getDate();
+    let redBackground = {};
+    if (this.state.diaryDate.getDate() !== today) {
+      redBackground.backgroundColor = '#ffe8e8';
+    }
+
     return (
-      <div className="App">
+      <div className="App" style={redBackground}>
         <Row>
           <Col lg="5">
             <Diary

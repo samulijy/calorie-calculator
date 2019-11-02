@@ -1,9 +1,18 @@
+.App {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    min-height: 100vh;
+}
+
 .mainContainer{
     width: 100%;
     margin: 20px;
     border: 2px solid;
     padding: 5px;
     box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.5);
+    background-color: #fff;
 }
 
 .mainContainer input {
