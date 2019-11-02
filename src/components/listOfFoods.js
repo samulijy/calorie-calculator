@@ -26,7 +26,8 @@ class ListOfFoods extends React.Component {
     }
 
     render() {
-        const itemLimit = this.props.diaryLength > 13 ? this.props.diaryLength + 1: 14;
+        // If diary gets long, we will show more items in one page of list. So list of foods will "strecth" with diary
+        const itemLimit = this.props.diaryLength > 10 ? this.props.diaryLength + 4: 14;
         const filteredFoods = this.props.data.filter(food => {
             return food.name.toLowerCase().indexOf(this.state.filterValue.toLowerCase()) >= 0
         });

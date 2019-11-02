@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Table, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import NumOnlyInput from './numOnlyInput'
-import { round } from '../utils'
 
 const QuickAddModal = (props) => {
     return (
@@ -19,19 +18,19 @@ const QuickAddModal = (props) => {
                         </tr>
                         <tr>
                             <td>Energy:</td>
-                            <td><NumOnlyInput inputValue={round(props.food.energy, 0)} name="energy" handleInputChange={props.handleInputChange} /> kcal</td>
+                            <td><NumOnlyInput inputValue={props.food.energy} name="energy" handleInputChange={props.handleInputChange} /> kcal</td>
                         </tr>
                         <tr>
                             <td>Fats:</td>
-                            <td><NumOnlyInput inputValue={round(props.food.fat, 1)} name="fat" handleInputChange={props.handleInputChange} /> g</td>
+                            <td><NumOnlyInput inputValue={props.food.fat} name="fat" handleInputChange={props.handleInputChange} /> g</td>
                         </tr>
                         <tr>
                             <td>Carbohydrates:</td>
-                            <td><NumOnlyInput inputValue={round(props.food.carb, 1)} name="carb" handleInputChange={props.handleInputChange} /> g</td>
+                            <td><NumOnlyInput inputValue={props.food.carb} name="carb" handleInputChange={props.handleInputChange} /> g</td>
                         </tr>
                         <tr>
                             <td>Proteins:</td>
-                            <td><NumOnlyInput inputValue={round(props.food.protein, 1)} name="protein" handleInputChange={props.handleInputChange} /> g</td>
+                            <td><NumOnlyInput inputValue={props.food.protein} name="protein" handleInputChange={props.handleInputChange} /> g</td>
                         </tr>
                     </tbody>
                 </Table>

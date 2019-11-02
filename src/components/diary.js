@@ -1,9 +1,10 @@
 import React from 'react';
 import { Table, Button, Row, Col } from 'reactstrap';
 import DiaryRow from './diaryRow';
-import { round } from '../utils'
+import { round, calculateStyle } from '../utils'
 import DatePickerComponent from './datePickerComponent';
 import QuickAddModal from './quickAddModal';
+import ProgressIndicator from './progressIndicator'
 
 class Diary extends React.Component {
     state = {
@@ -34,9 +35,9 @@ class Diary extends React.Component {
                 newFood = {
                     ...this.state.newFood,
                     energy,
-                    fat: quarter / 9, // Fats have about 9 calories per gram
-                    protein: quarter / 4, // Proteins have about 4 calories per gram
-                    carb: half / 4 // Carbs have about 4 calories per gram
+                    fat: round(quarter / 9, 1),// Fats have about 9 calories per gram
+                    protein: round(quarter / 4, 1), // Proteins have about 4 calories per gram
+                    carb: round(half / 4, 1), // Carbs have about 4 calories per gram
                 }
                 break;
             default:
@@ -158,16 +159,31 @@ class Diary extends React.Component {
                             <td>{round(dailyGoal.protein, 1)}</td>
                             <td ></td>
                         </tr>
-                        <tr className="bolded" style={{ "color": "red" }}>
+                        <tr className="bolded">
                             <td>Remaining</td>
-                            <td>{round(dailyGoal.energy - totals.energy, 0)}</td>
-                            <td>{round(dailyGoal.fat - totals.fat, 1)}</td>
-                            <td>{round(dailyGoal.carb - totals.carb, 1)}</td>
-                            <td>{round(dailyGoal.protein - totals.protein, 1)}</td>
+                            <td className={'text-' + calculateStyle(totals.energy, dailyGoal.energy)}>
+                                {round(dailyGoal.energy - totals.energy, 0)}
+                            </td>
+                            <td className={'text-' + calculateStyle(totals.fat, dailyGoal.fat)}>
+                                {round(dailyGoal.fat - totals.fat, 1)}
+                            </td>
+                            <td className={'text-' + calculateStyle(totals.carb, dailyGoal.carb)}>
+                                {round(dailyGoal.carb - totals.carb, 1)}
+                            </td>
+                            <td className={'text-' + calculateStyle(totals.protein, dailyGoal.protein)}>
+                                {round(dailyGoal.protein - totals.protein, 1)}
+                            </td>
                             <td></td>
                         </tr>
                     </tbody>
                 </Table>
+                <Row>
+                    <Col>
+                        <ProgressIndicator
+                            dailyGoal={dailyGoal}
+                            totals={totals}/>
+                    </Col>
+                </Row>
 
                 <QuickAddModal
                     modal={this.state.quickAddModal}
